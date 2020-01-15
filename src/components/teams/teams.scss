@@ -1,0 +1,80 @@
+.team-wrapper {
+  margin: 20px 0;
+  .team-dropdown {
+    .team-dropdown-btn {
+      display: block;
+      cursor: pointer;
+      font-size: 14px;
+      color: black;
+      padding: 10px 20px;
+      background-color: #39cccc;
+      font-family: inherit;
+      margin: 0;
+      .team-name {
+        position: relative;
+        text-align: left;
+        font-weight: bold;
+        span{
+            margin-left: 5px;
+            font-size: 12px;
+            font-weight: lighter;
+        }
+        &:after {
+          position: absolute;
+          top: -2px;
+          right: 0;
+          content: '';
+          display: block;
+          width: 40px;
+          height: 30px;
+          background: url('../../assets/icons/arrow.svg') center center
+            no-repeat;
+        }
+      }
+      .team-dropdown-content {
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.8s linear;
+        height: 0;
+        text-align: left;
+        p {
+          font-size: 12px;
+          line-height: 20px;
+          border-bottom: 1px solid #252525;
+          span {
+            font-weight: bold;
+          }
+        }
+      }
+      &:hover {
+        .team-dropdown-content {
+          visibility: visible;
+          opacity: 1;
+          height: auto;
+        }
+      }
+    }
+
+    .active {
+      display: block;
+    }
+  }
+}
+
+.load-more-btn {
+  display: block;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  width: 100%;
+  margin: 40px 0 10px 0;
+  border-radius: 5px;
+  background: #eeeeee;
+  transition: background 0.2s ease-in-out;
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  &:hover {
+    background: #aaaaaa;
+  }
+}

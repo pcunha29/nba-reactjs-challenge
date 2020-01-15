@@ -1,0 +1,20 @@
+.App {
+  background: #dddddd;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.container {
+  padding: 50px 0;
+}
+
+.teams {
+  border: 1px solid #aaaaaa;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.players {
+  position: relative;
+  height: 550px;
+  margin-left: 10px;
+}

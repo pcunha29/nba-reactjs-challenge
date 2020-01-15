@@ -1,0 +1,72 @@
+.players-wrapper {
+  display: block;
+  padding: 10px 20px;
+  height: 300px;
+  border: 1px solid #aaaaaa;
+  border-radius: 5px;
+  overflow-y: scroll;
+  .player {
+    display: block;
+    text-align: left;
+    background: transparent;
+    height: 30px;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    margin: 5px 0;
+    transition: all 0.5s ease-in-out;
+    &:hover {
+      border-bottom: 1px solid #aaaaaa;
+      color: #10ac84;
+    }
+  }
+}
+.card-wrapper {
+  margin-top: 50px;
+  position: relative;
+  display: block;
+  height: 100px;
+  width: 100%;
+  .player-card {
+    position: absolute;
+    height: 100px;
+    width: 330px;
+    padding: 10px 30px;
+    margin-left: 5px;
+    text-align: left;
+    background: white;
+    border-radius: 5px;
+    display: block;
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    visibility: hidden;
+    .name {
+      text-align: center;
+      font-size: 18px;
+      margin: 0;
+      line-height: 30px;
+      border-bottom: 1px solid #252525;
+    }
+    .info-wrapper {
+      display: block;
+      margin-top: 20px;
+      columns: 2;
+      .info {
+        display: block;
+        min-width: 200px;
+        font-weight: 400;
+        margin: 0 0 10px;
+        span {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  .show_card {
+    visibility: visible;
+  }
+}
