@@ -1,5 +1,6 @@
 .players-wrapper {
   display: block;
+  margin-top: 15px;
   padding: 10px 20px;
   height: 300px;
   border: 1px solid #aaaaaa;
@@ -21,6 +22,38 @@
     &:hover {
       border-bottom: 1px solid #aaaaaa;
       color: #10ac84;
+    }
+  }
+}
+.pages-handler {
+  display: flex;
+  height: 35px;
+  justify-content: center;
+  width: 100%;
+  margin: 10px 0;
+  .pagination {
+    margin: 15px 10px 0;
+    font-size: 12px;
+    span {
+      font-weight: bold;
+    }
+  }
+  button {
+    display: block;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    width: 100px;
+    margin: 0 15px;
+    border-radius: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    transition: background 0.2s ease-in-out;
+    color: black;
+    font-size: 12px;
+    font-weight: bold;
+    &:hover {
+      border-bottom: 1px solid #aaaaaa;
     }
   }
 }

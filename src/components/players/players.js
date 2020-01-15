@@ -4,6 +4,7 @@ import cn from 'classnames';
 
 import './players.scss';
 
+var page = 1;
 class PlayerComponent extends Component {
   constructor(props) {
     super(props);
@@ -24,13 +25,35 @@ class PlayerComponent extends Component {
       });
   }
 
-  loadMore = () => {
-    this.setState({ state: this.state });
+  newPage = () => {
+    axios
+      .get(`/players?page=${page}`, {})
+      .then(res => {
+        this.setState({ playersData: res.data });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  nextPage = () => {
+    const totalPages = this.state.playersData.meta.total_pages;
+    if (page < totalPages) {
+      page += 1;
+    }
+    this.newPage();
+  };
+  previousPage = () => {
+    if (page > 0) {
+      page -= 1;
+    }
+    this.newPage();
   };
 
   render() {
     const { idCard } = this.state;
     const playersData = this.state.playersData.data;
+    const playersMetaData = this.state.playersData.meta;
 
     if (!playersData) {
       return <div />;
@@ -56,7 +79,7 @@ class PlayerComponent extends Component {
 
     return (
       <Fragment>
-        <div className="players-wrapper">
+        <div className="players-wrapper center-xs">
           {playersData.map(player => (
             <button
               onClick={() => this.setState({ idCard: player.id })}
@@ -65,6 +88,13 @@ class PlayerComponent extends Component {
               {player.first_name} {player.last_name}
             </button>
           ))}
+        </div>
+        <div className="pages-handler">
+          <button onClick={() => this.previousPage()}>PreviousPage</button>
+          <p className="pagination">
+            {page} / <span>{playersMetaData.total_pages}</span>
+          </p>
+          <button onClick={() => this.nextPage()}>NextPage</button>
         </div>
         <div className="card-wrapper">
           {playersData &&
@@ -85,9 +115,10 @@ class PlayerComponent extends Component {
                       </h5>
                     ) : null}
 
-                    {player && player.team.name !== "" ? (
+                    {player && player.team.name !== '' ? (
                       <h5 className="info">
-                        <span>Team name: </span>{player.team.name}
+                        <span>Team name: </span>
+                        {player.team.name}
                       </h5>
                     ) : null}
 
