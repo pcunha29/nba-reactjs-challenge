@@ -18,7 +18,8 @@ class PlayerComponent extends Component {
     axios
       .get(`/players`, {})
       .then(res => {
-        this.setState({ playersData: res.data });
+        this.setState({ playersData: res.data.data });
+        this.setState({ playersMetaData: res.data.meta });
       })
       .catch(error => {
         console.log(error);
@@ -29,7 +30,7 @@ class PlayerComponent extends Component {
     axios
       .get(`/players?page=${page}`, {})
       .then(res => {
-        this.setState({ playersData: res.data });
+        this.setState({ playersData: res.data.data });
       })
       .catch(error => {
         console.log(error);
@@ -37,8 +38,8 @@ class PlayerComponent extends Component {
   };
 
   nextPage = () => {
-    const totalPages = this.state.playersData.meta.total_pages;
-    if (page < totalPages) {
+    const { playersMetaData } = this.state;
+    if (page < playersMetaData.total_pages) {
       page += 1;
     }
     this.newPage();
@@ -51,12 +52,10 @@ class PlayerComponent extends Component {
   };
 
   render() {
-    const { idCard } = this.state;
-    const playersData = this.state.playersData.data;
-    const playersMetaData = this.state.playersData.meta;
+    const { idCard, playersData, playersMetaData } = this.state;
 
-    if (!playersData) {
-      return <div />;
+    if (!playersData || !playersMetaData) {
+      return null;
     }
 
     playersData.sort((a, b) => {
@@ -97,41 +96,42 @@ class PlayerComponent extends Component {
           <button onClick={() => this.nextPage()}>NextPage</button>
         </div>
         <div className="card-wrapper">
-          {playersData && idCard !== 0 &&
+          {playersData &&
+            idCard !== 0 &&
             playersData.map(player => (
               <div
                 className={`player-card ${cn({
                   show_card: player.id === idCard
                 })} `}
               >
-                  <p className="name">
-                    {player.first_name} {player.last_name}
-                  </p>
-                  <div className="info-wrapper">
-                    {player && player.position !== '' ? (
-                      <h5 className="info">
-                        <span>Position: </span> {player.position}
-                      </h5>
-                    ) : null}
+                <p className="name">
+                  {player.first_name} {player.last_name}
+                </p>
+                <div className="info-wrapper">
+                  {player && player.position !== '' ? (
+                    <h5 className="info">
+                      <span>Position: </span> {player.position}
+                    </h5>
+                  ) : null}
 
-                    {player && player.team.name !== '' ? (
-                      <h5 className="info">
-                        <span>Team name: </span>
-                        {player.team.name}
-                      </h5>
-                    ) : null}
+                  {player && player.team.name !== '' ? (
+                    <h5 className="info">
+                      <span>Team name: </span>
+                      {player.team.name}
+                    </h5>
+                  ) : null}
 
-                    {player &&
-                    player.height_feet !== null &&
-                    player.height_inches !== null ? (
-                      <h5 className="info">
-                        <span>Height: </span>
-                        {player.height_feet}
-                        ft /{player.height_inches}''
-                      </h5>
-                    ) : null}
-                  </div>
+                  {player &&
+                  player.height_feet !== null &&
+                  player.height_inches !== null ? (
+                    <h5 className="info">
+                      <span>Height: </span>
+                      {player.height_feet}
+                      ft /{player.height_inches}''
+                    </h5>
+                  ) : null}
                 </div>
+              </div>
             ))}
         </div>
       </Fragment>

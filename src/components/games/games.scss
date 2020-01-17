@@ -1,0 +1,38 @@
+.games-wrapper {
+  display: block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  height: 300px;
+  border: 1px solid #aaaaaa;
+  border-radius: 5px;
+  overflow-y: scroll;
+
+  .game-vs {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    text-align: left;
+    background: transparent;
+    height: 25px;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    margin: 5px 0;
+    transition: all 0.5s ease-in-out;
+    &:hover {
+      border-bottom: 1px solid #aaaaaa;
+      color: #10ac84;
+    }
+    .team {
+      margin: 0;
+      padding: 0 10px;
+    }
+    span {
+      font-size: 10px;
+      padding-top: 2px;
+    }
+  }
+}
