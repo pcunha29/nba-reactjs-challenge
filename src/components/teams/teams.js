@@ -1,15 +1,17 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
+import cn from 'classnames';
 
 import './teams.scss';
-
-var LIMIT = 5;
 
 class TeamComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      teamData: []
+      teamData: [],
+      LIMIT: 5,
+      teamID: 1,
+      games: []
     };
   }
 
@@ -17,23 +19,41 @@ class TeamComponent extends Component {
     axios
       .get(`/teams`, {})
       .then(res => {
-        this.setState({ teamData: res.data });
+        this.setState({ teamData: res.data.data });
       })
       .catch(error => {
         console.log(error);
       });
   }
 
+  requestGames = ({ team }) => {
+    const { teamID } = this.state;
+    this.setState({ teamID: team.id });
+
+    axios
+      .get(`/games/team/${teamID}`)
+      .then(res => {
+        this.setState({ games: res.data.data });
+        console.log(res.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   loadMore = () => {
-    LIMIT += 5;
-    this.setState({ state: this.state });
+    const { LIMIT } = this.state;
+    const newLIMIT = LIMIT + 5;
+
+    this.setState({ LIMIT: newLIMIT });
   };
 
   render() {
-    const teamData = this.state.teamData.data;
+    const { teamData, LIMIT, teamID, games } = this.state;
+    console.log(this.state);
 
     if (!teamData) {
-      return <div />;
+      return null;
     }
 
     teamData.sort((a, b) => {
@@ -60,6 +80,12 @@ class TeamComponent extends Component {
                       <span>({team.abbreviation})</span>
                     </p>
                     <div className="team-dropdown-content">
+                      <button
+                        className="show-games-btn"
+                        onClick={() => this.requestGames({ team })}
+                      >
+                        Show Games
+                      </button>
                       <p>
                         <span>Name: </span>
                         {team.full_name}
@@ -85,6 +111,18 @@ class TeamComponent extends Component {
         <button className="load-more-btn" onClick={() => this.loadMore()}>
           <p>Load More</p>
         </button>
+        <div
+          className={`games-by-team ${cn({
+            show: teamID !== 1
+          })} `}
+        >
+          {games &&
+            games.map(game => (
+              <div className="game-card-wrapper">
+                <p>[WIP]Game ID: {game.id}</p>
+              </div>
+            ))}
+        </div>
       </Fragment>
     );
   }

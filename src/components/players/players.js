@@ -97,14 +97,13 @@ class PlayerComponent extends Component {
           <button onClick={() => this.nextPage()}>NextPage</button>
         </div>
         <div className="card-wrapper">
-          {playersData &&
+          {playersData && idCard !== 0 &&
             playersData.map(player => (
               <div
                 className={`player-card ${cn({
                   show_card: player.id === idCard
                 })} `}
               >
-                <div>
                   <p className="name">
                     {player.first_name} {player.last_name}
                   </p>
@@ -133,7 +132,6 @@ class PlayerComponent extends Component {
                     ) : null}
                   </div>
                 </div>
-              </div>
             ))}
         </div>
       </Fragment>
