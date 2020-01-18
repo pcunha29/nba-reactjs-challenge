@@ -76,7 +76,6 @@
     top: 0;
     left: 0;
     font-size: 16px;
-    visibility: hidden;
     .name {
       text-align: center;
       font-size: 18px;
@@ -98,8 +97,5 @@
         }
       }
     }
-  }
-  .show_card {
-    visibility: visible;
   }
 }

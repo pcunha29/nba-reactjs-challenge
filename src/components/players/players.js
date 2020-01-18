@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
-import cn from 'classnames';
 
 import './players.scss';
 
@@ -10,7 +9,7 @@ class PlayerComponent extends Component {
     super(props);
     this.state = {
       playersData: [],
-      idCard: 0
+      idCard: null
     };
   }
 
@@ -53,7 +52,7 @@ class PlayerComponent extends Component {
 
   render() {
     const { idCard, playersData, playersMetaData } = this.state;
-
+    const clickedPlayer = playersData[idCard];
     if (!playersData || !playersMetaData) {
       return null;
     }
@@ -79,9 +78,9 @@ class PlayerComponent extends Component {
     return (
       <Fragment>
         <div className="players-wrapper center-xs">
-          {playersData.map(player => (
+          {playersData.map((player, index) => (
             <button
-              onClick={() => this.setState({ idCard: player.id })}
+              onClick={() => this.setState({ idCard: index })}
               className="player"
             >
               {player.first_name} {player.last_name}
@@ -95,45 +94,39 @@ class PlayerComponent extends Component {
           </p>
           <button onClick={() => this.nextPage()}>NextPage</button>
         </div>
-        <div className="card-wrapper">
-          {playersData &&
-            idCard !== 0 &&
-            playersData.map(player => (
-              <div
-                className={`player-card ${cn({
-                  show_card: player.id === idCard
-                })} `}
-              >
-                <p className="name">
-                  {player.first_name} {player.last_name}
-                </p>
-                <div className="info-wrapper">
-                  {player && player.position !== '' ? (
-                    <h5 className="info">
-                      <span>Position: </span> {player.position}
-                    </h5>
-                  ) : null}
+        {playersData && idCard !== null ? (
+          <div className="card-wrapper">
+            <div className="player-card">
+              <p className="name">
+                {clickedPlayer.first_name} {clickedPlayer.last_name}
+              </p>
+              <div className="info-wrapper">
+                {clickedPlayer && clickedPlayer.position !== '' ? (
+                  <h5 className="info">
+                    <span>Position: </span> {clickedPlayer.position}
+                  </h5>
+                ) : null}
 
-                  {player && player.team.name !== '' ? (
-                    <h5 className="info">
-                      <span>Team name: </span>
-                      {player.team.name}
-                    </h5>
-                  ) : null}
+                {clickedPlayer && clickedPlayer.team.name !== '' ? (
+                  <h5 className="info">
+                    <span>Team name: </span>
+                    {clickedPlayer.team.name}
+                  </h5>
+                ) : null}
 
-                  {player &&
-                  player.height_feet !== null &&
-                  player.height_inches !== null ? (
-                    <h5 className="info">
-                      <span>Height: </span>
-                      {player.height_feet}
-                      ft /{player.height_inches}''
-                    </h5>
-                  ) : null}
-                </div>
+                {clickedPlayer &&
+                clickedPlayer.height_feet !== null &&
+                clickedPlayer.height_inches !== null ? (
+                  <h5 className="info">
+                    <span>Height: </span>
+                    {clickedPlayer.height_feet}
+                    ft /{clickedPlayer.height_inches}''
+                  </h5>
+                ) : null}
               </div>
-            ))}
-        </div>
+            </div>
+          </div>
+        ) : null}
       </Fragment>
     );
   }
