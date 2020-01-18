@@ -10,8 +10,8 @@ class TeamComponent extends Component {
     this.state = {
       teamData: [],
       LIMIT: 5,
-      teamID: 1,
-      games: []
+      games: [],
+      showCard: false
     };
   }
 
@@ -27,14 +27,12 @@ class TeamComponent extends Component {
   }
 
   requestGames = ({ team }) => {
-    const { teamID } = this.state;
-    this.setState({ teamID: team.id });
-
+    this.showCard = true;
+    var selectedTeam = team.id;
     axios
-      .get(`/games/team/${teamID}`)
+      .get(`/games/team/${selectedTeam}`)
       .then(res => {
         this.setState({ games: res.data.data });
-        console.log(res.data.data);
       })
       .catch(error => {
         console.log(error);
@@ -49,8 +47,7 @@ class TeamComponent extends Component {
   };
 
   render() {
-    const { teamData, LIMIT, teamID, games } = this.state;
-    console.log(this.state);
+    const { teamData, LIMIT, games } = this.state;
 
     if (!teamData) {
       return null;
@@ -86,22 +83,24 @@ class TeamComponent extends Component {
                       >
                         Show Games
                       </button>
-                      <p>
-                        <span>Name: </span>
-                        {team.full_name}
-                      </p>
-                      <p>
-                        <span>Abbreviation: </span>
-                        {team.abbreviation}
-                      </p>
-                      <p>
-                        <span>City: </span>
-                        {team.city}
-                      </p>
-                      <p>
-                        <span>Conference: </span>
-                        {team.conference}
-                      </p>
+                      <div className="content">
+                        <p>
+                          <span>Name: </span>
+                          {team.full_name}
+                        </p>
+                        <p>
+                          <span>Abbreviation: </span>
+                          {team.abbreviation}
+                        </p>
+                        <p>
+                          <span>City: </span>
+                          {team.city}
+                        </p>
+                        <p>
+                          <span>Conference: </span>
+                          {team.conference}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -111,15 +110,15 @@ class TeamComponent extends Component {
         <button className="load-more-btn" onClick={() => this.loadMore()}>
           <p>Load More</p>
         </button>
-        <div
-          className={`games-by-team ${cn({
-            show: teamID !== 1
-          })} `}
-        >
+        <div className={`games-by-team ${cn({show : this.showCard === true})}`}>
           {games &&
             games.map(game => (
               <div className="game-card-wrapper">
-                <p>[WIP]Game ID: {game.id}</p>
+                <div className="teams">
+                  <div className="value">{game.home_team.abbreviation}</div>
+                  <div className="vs">VS</div>
+                  <div className="value">{game.visitor_team.abbreviation}</div>
+                </div>
               </div>
             ))}
         </div>

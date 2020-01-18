@@ -32,18 +32,23 @@
         }
       }
       .team-dropdown-content {
+        position: relative;
         visibility: hidden;
         opacity: 0;
         transition: visibility 0s, opacity 0.8s linear;
         height: 0;
         text-align: left;
         .show-games-btn {
+          position: absolute;
+          top: -20%;
+          left: 50%;
+          transform: translate(-50%, -50%);
           display: block;
           cursor: pointer;
           border: none;
           outline: none;
-          width: 100%;
-          padding: 5px 0;
+          width: 120px;
+          padding: 10px 0;
           background: transparentize(white, 0.8);
           color: #252525;
           font-weight: bold;
@@ -53,12 +58,14 @@
             border-bottom: 1px solid #eeeeee;
           }
         }
-        p {
-          font-size: 12px;
-          line-height: 20px;
-          border-bottom: 1px solid #252525;
-          span {
-            font-weight: bold;
+        .content {
+          p {
+            font-size: 12px;
+            line-height: 20px;
+            border-bottom: 1px solid #252525;
+            span {
+              font-weight: bold;
+            }
           }
         }
       }
@@ -67,6 +74,9 @@
           visibility: visible;
           opacity: 1;
           height: auto;
+          .content {
+            margin-top: 50px;
+          }
         }
       }
     }
@@ -98,12 +108,33 @@
 .games-by-team {
   display: none;
   margin-top: 100px;
-  height: 50px;
   width: 100%;
-  background: black;
-  color: white;
+  height: 300px;
+  color: black;
   font-size: 16px;
+  border: 1px solid #eeeeee;
+  border-radius: 5px;
+  font-weight: bold;
   overflow-y: scroll;
+  .game-card-wrapper {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 0 5px;
+    width: 45%;
+    .teams {
+      display: flex;
+      justify-content: center;
+      border-bottom: 2px solid black;
+      .vs {
+        font-weight: lighter;
+        padding-top: 13px;
+        font-size: 10px;
+      }
+      .value {
+        margin: 10px;
+      }
+    }
+  }
 }
 .show {
   display: block;
