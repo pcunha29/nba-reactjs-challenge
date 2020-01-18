@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
-//import cn from 'classnames';
+import moment from 'moment';
 
 import './games.scss';
 
@@ -10,7 +10,7 @@ class GamesComponent extends Component {
     super(props);
     this.state = {
       gamesData: [],
-      idCard: 0
+      idGame: null
     };
   }
 
@@ -52,9 +52,9 @@ class GamesComponent extends Component {
   };
 
   render() {
-    const { gamesData, gamesMetaData } = this.state;
-    console.log(this.state);
-    
+    const { gamesData, gamesMetaData, idGame } = this.state;
+    const clickedGame = gamesData[idGame];
+
     if (!gamesData || !gamesMetaData) {
       return null;
     }
@@ -81,12 +81,15 @@ class GamesComponent extends Component {
       <Fragment>
         <div className="games-wrapper center-xs">
           {gamesData &&
-            gamesData.map(game => (
-              <div className="game-vs">
+            gamesData.map((game, index) => (
+              <button
+                onClick={() => this.setState({ idGame: index })}
+                className="game-vs"
+              >
                 <p className="team">{game.home_team.abbreviation}</p>
                 <span>VS</span>
                 <p className="team">{game.visitor_team.abbreviation}</p>
-              </div>
+              </button>
             ))}
         </div>
         <div className="pages-handler">
@@ -96,6 +99,26 @@ class GamesComponent extends Component {
           </p>
           <button onClick={() => this.nextPage()}>NextPage</button>
         </div>
+
+        {gamesData && idGame !== null ? (
+          <div className="games-card">
+            <div>
+              <div className="game-date">
+                {moment(clickedGame.date).format('Do MMMM YYYY')}
+              </div>
+              <div className="game-teams">
+                <div className="value">{clickedGame.home_team.full_name}</div>
+                <div className="value">
+                  {clickedGame.visitor_team.full_name}
+                </div>
+              </div>
+              <div className="game-score">
+                <div className="value">{clickedGame.home_team_score}</div>
+                <div className="value">{clickedGame.visitor_team_score}</div>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </Fragment>
     );
   }

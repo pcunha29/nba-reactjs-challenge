@@ -36,3 +36,28 @@
     }
   }
 }
+
+.games-card {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  background: white;
+  border: 1px solid #aaaaaa;
+  border-radius: 5px;
+  padding: 15px;
+  width: 100%;
+  .game-date {
+    padding: 6px;
+  }
+  .game-teams,
+  .game-score {
+    margin-top: 5px;
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    .value{
+      width: 200px;
+      padding: 0 4px;
+    }
+  }
+}
